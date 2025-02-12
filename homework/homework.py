@@ -172,9 +172,9 @@ def optimize_pipeline(pipeline, x_train, y_train):
 
     param_grid = {
         "pca__n_components": [20, x_train.shape[1] - 2],
-        "k_best__k": [10, 20, 30],
+        "k_best__k": [10, 15, 20],
         "classifier__hidden_layer_sizes": [(20, 40, 60)],
-        "classifier__alpha": [0.1, 0.2, 0.3],
+        "classifier__alpha": [0.1, 0.2, 0.25, 0.3],
         "classifier__learning_rate_init": [0.001],
     }
 
@@ -185,6 +185,7 @@ def optimize_pipeline(pipeline, x_train, y_train):
     print("Optimizando hiperparámetros con GridSearchCV...")
     grid_search.fit(x_train, y_train)
     print("Optimización finalizada.")
+    print(grid_search.best_params_)
 
     return grid_search
 
