@@ -171,7 +171,7 @@ def optimize_pipeline(pipeline, x_train, y_train):
 
     param_grid = {
         "pca__n_components": [31],
-        "k_best__k": [22],
+        "k_best__k": [25],
         "classifier__hidden_layer_sizes": [(50, 30, 40, 60)],
         "classifier__alpha": [0.33],
         "classifier__learning_rate_init": [0.001],
