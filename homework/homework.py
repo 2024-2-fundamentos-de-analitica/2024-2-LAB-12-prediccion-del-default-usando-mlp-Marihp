@@ -145,7 +145,7 @@ def build_pipeline():
     k_best = SelectKBest(f_classif, k=min(10, num_features_after_preprocessing))
 
     # Modelo MLP
-    model = MLPClassifier(max_iter=15000)
+    model = MLPClassifier()
 
     # Construcción del pipeline
     pipeline = Pipeline(
@@ -168,18 +168,23 @@ def build_pipeline():
 
 def optimize_pipeline(pipeline, x_train, y_train):
     """Optimiza el pipeline usando GridSearchCV con 10-fold cross-validation."""
-    scoring = make_scorer(balanced_accuracy_score)
 
     param_grid = {
-        "pca__n_components": [20, x_train.shape[1] - 2],
-        "k_best__k": [10, 15, 20],
-        "classifier__hidden_layer_sizes": [(20, 40, 60)],
-        "classifier__alpha": [0.1, 0.2, 0.25, 0.3],
+        "pca__n_components": [31],
+        "k_best__k": [22],
+        "classifier__hidden_layer_sizes": [(50, 30, 40, 60)],
+        "classifier__alpha": [0.33],
         "classifier__learning_rate_init": [0.001],
     }
 
     grid_search = GridSearchCV(
-        pipeline, param_grid, cv=10, scoring=scoring, n_jobs=-1, verbose=2, refit=True
+        pipeline,
+        param_grid,
+        cv=10,
+        scoring="balanced_accuracy",
+        n_jobs=-1,
+        refit=True,
+        verbose=2,
     )
 
     print("Optimizando hiperparámetros con GridSearchCV...")
